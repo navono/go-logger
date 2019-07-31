@@ -1,11 +1,10 @@
 package logger
 
 import (
+	"github.com/sirupsen/logrus"
+	"gopkg.in/natefinch/lumberjack.v2"
 	"io"
 	"os"
-
-	"github.com/sirupsen/logrus"
-	lumberjack "gopkg.in/natefinch/lumberjack.v2"
 )
 
 type logrusLogEntry struct {
@@ -96,27 +95,27 @@ func (l *logrusLogger) WithFields(fields Fields) Logger {
 }
 
 func (l *logrusLogEntry) Debugf(format string, args ...interface{}) {
-	l.Debugf(format, args...)
+	l.entry.Debugf(format, args...)
 }
 
 func (l *logrusLogEntry) Infof(format string, args ...interface{}) {
-	l.Infof(format, args...)
+	l.entry.Infof(format, args...)
 }
 
 func (l *logrusLogEntry) Warnf(format string, args ...interface{}) {
-	l.Warnf(format, args...)
+	l.entry.Warnf(format, args...)
 }
 
 func (l *logrusLogEntry) Errorf(format string, args ...interface{}) {
-	l.Errorf(format, args...)
+	l.entry.Errorf(format, args...)
 }
 
 func (l *logrusLogEntry) Fatalf(format string, args ...interface{}) {
-	l.Fatalf(format, args...)
+	l.entry.Fatalf(format, args...)
 }
 
 func (l *logrusLogEntry) Panicf(format string, args ...interface{}) {
-	l.Fatalf(format, args...)
+	l.entry.Fatalf(format, args...)
 }
 
 func (l *logrusLogEntry) WithFields(fields Fields) Logger {
