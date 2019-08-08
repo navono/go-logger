@@ -1,0 +1,11 @@
+<component name="ProjectDictionaryState">
+  <dictionary name="user">
+    <words>
+      <w>debugf</w>
+      <w>errorf</w>
+      <w>infof</w>
+      <w>panicf</w>
+      <w>warnf</w>
+    </words>
+  </dictionary>
+</component>

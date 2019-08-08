@@ -16,7 +16,7 @@ const (
 	Warn = "warn"
 	// Error is for logging errors
 	Error = "error"
-	// Fatal is for logging fatal messages. The sytem shutsdown after logging the message.
+	// Fatal is for logging fatal messages. The system shutdown after logging the message.
 	Fatal = "fatal"
 )
 
@@ -28,7 +28,7 @@ const (
 )
 
 var (
-	errInvalidLoggerInstance = errors.New("Invalid logger instance")
+	errInvalidLoggerInstance = errors.New("invalid logger instance")
 )
 
 // Logger is our contract for the logger

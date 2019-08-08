@@ -40,7 +40,7 @@ func getZapLevel(level string) zapcore.Level {
 }
 
 func newZapLogger(config Configuration) (Logger, error) {
-	cores := []zapcore.Core{}
+	var cores []zapcore.Core
 
 	if config.EnableConsole {
 		level := getZapLevel(config.ConsoleLevel)
