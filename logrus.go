@@ -59,6 +59,8 @@ func newLogrusLogger(config Configuration) (Logger, error) {
 		}
 	}
 
+	lLogger.AddHook(NewContextHook(level))
+
 	return &logrusLogger{
 		logger: lLogger,
 	}, nil

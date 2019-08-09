@@ -2,8 +2,6 @@ package logger
 
 import "errors"
 
-var log Logger
-
 // Fields Type to pass when we want to call WithFields for structured logging
 type Fields map[string]interface{}
 
@@ -61,60 +59,23 @@ type Configuration struct {
 }
 
 // NewLogger returns an instance of Logger
-func NewLogger(config Configuration, loggerInstance int) error {
+func NewLogger(config Configuration, loggerInstance int) (Logger, error) {
 	switch loggerInstance {
 	case InstanceZapLogger:
 		logger, err := newZapLogger(config)
 		if err != nil {
-			return err
+			return nil, err
 		}
-		log = logger
-		return nil
+		return logger, nil
 
 	case InstanceLogrusLogger:
 		logger, err := newLogrusLogger(config)
 		if err != nil {
-			return err
+			return nil, err
 		}
-		log = logger
-		return nil
+		return logger, nil
 
 	default:
-		return errInvalidLoggerInstance
+		return nil, errInvalidLoggerInstance
 	}
-}
-
-// Debugf for format debug log
-func Debugf(format string, args ...interface{}) {
-	log.Debugf(format, args...)
-}
-
-// Infof for format info log
-func Infof(format string, args ...interface{}) {
-	log.Infof(format, args...)
-}
-
-// Warnf for format warn log
-func Warnf(format string, args ...interface{}) {
-	log.Warnf(format, args...)
-}
-
-// Errorf for format error log
-func Errorf(format string, args ...interface{}) {
-	log.Errorf(format, args...)
-}
-
-// Fatalf for format fatal log
-func Fatalf(format string, args ...interface{}) {
-	log.Fatalf(format, args...)
-}
-
-// Panicf for format panic log
-func Panicf(format string, args ...interface{}) {
-	log.Panicf(format, args...)
-}
-
-// WithFields for key-value log
-func WithFields(keyValues Fields) Logger {
-	return log.WithFields(keyValues)
 }

@@ -16,24 +16,25 @@ func main() {
 		FileJSONFormat:    true,
 		FileLocation:      "log.log",
 	}
-	err := logger.NewLogger(config, logger.InstanceZapLogger)
+	zapLogger, err := logger.NewLogger(config, logger.InstanceZapLogger)
 	if err != nil {
 		log.Fatalf("Could not instantiate log %s", err.Error())
 	}
 
-	contextLogger := logger.WithFields(logger.Fields{"key1": "value1"})
-	contextLogger.Debugf("Starting with zap")
+	zapLogger.Infof("Starting with zap")
+
+	contextLogger := zapLogger.WithFields(logger.Fields{"key1": "value1"})
 	contextLogger.Infof("Zap is awesome")
 
-	err = logger.NewLogger(config, logger.InstanceLogrusLogger)
+	logrusLogger, err := logger.NewLogger(config, logger.InstanceLogrusLogger)
 	if err != nil {
 		log.Fatalf("Could not instantiate log %s", err.Error())
 	}
 
-	logger.Debugf("Starting with logrus")
-	logger.Infof("Logrus is awesome")
+	logrusLogger.Debugf("Starting with logrus")
+	logrusLogger.Infof("Logrus is awesome")
 
-	contextLogger = logger.WithFields(logger.Fields{"key1": "value1"})
+	contextLogger = logrusLogger.WithFields(logger.Fields{"key1": "value1"})
 	contextLogger.Debugf("Starting with context logrus")
 	contextLogger.Infof("Logrus is awesome")
 }
