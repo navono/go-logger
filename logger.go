@@ -79,3 +79,15 @@ func NewLogger(config Configuration, loggerInstance int) (Logger, error) {
 		return nil, errInvalidLoggerInstance
 	}
 }
+
+// GetConcreteLogger returns the underlying log instance
+func GetConcreteLogger(log Logger) interface{} {
+	switch l := log.(type) {
+	case *zapLogger:
+		return l.sugaredLogger
+	case *logrusLogger:
+		return l.logger
+	}
+
+	return nil
+}

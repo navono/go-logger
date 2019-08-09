@@ -1,6 +1,7 @@
 package main
 
 import (
+	"go.uber.org/zap"
 	"log"
 
 	"github.com/navono/go-logger"
@@ -25,6 +26,13 @@ func main() {
 
 	contextLogger := zapLogger.WithFields(logger.Fields{"key1": "value1"})
 	contextLogger.Infof("Zap is awesome")
+
+	c := logger.GetConcreteLogger(zapLogger)
+	if c != nil {
+		sl := c.(*zap.SugaredLogger)
+		zl := sl.Desugar()
+		zl.Debug("concrete zap logger")
+	}
 
 	logrusLogger, err := logger.NewLogger(config, logger.InstanceLogrusLogger)
 	if err != nil {
