@@ -16,6 +16,8 @@ func main() {
 		FileLevel:         logger.Info,
 		FileJSONFormat:    true,
 		FileLocation:      "log.log",
+		FileMaxSize:       1,
+		FileMaxAge:        1,
 	}
 	zapLogger, err := logger.NewLogger(config, logger.InstanceZapLogger)
 	if err != nil {

@@ -56,6 +56,8 @@ type Configuration struct {
 	FileJSONFormat    bool
 	FileLevel         string
 	FileLocation      string
+	FileMaxSize       int
+	FileMaxAge        int
 }
 
 // NewLogger returns an instance of Logger

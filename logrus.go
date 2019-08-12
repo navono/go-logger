@@ -39,9 +39,9 @@ func newLogrusLogger(config Configuration) (Logger, error) {
 	stdOutHandler := os.Stdout
 	fileHandler := &lumberjack.Logger{
 		Filename: config.FileLocation,
-		MaxSize:  100,
+		MaxSize:  config.FileMaxSize,
 		Compress: true,
-		MaxAge:   28,
+		MaxAge:   config.FileMaxAge,
 	}
 	lLogger := &logrus.Logger{
 		Out:       stdOutHandler,
