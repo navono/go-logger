@@ -1,21 +1,32 @@
 package logger
 
-import "errors"
+import (
+	"errors"
+	"fmt"
+	"github.com/sirupsen/logrus"
+)
 
 // Fields Type to pass when we want to call WithFields for structured logging
 type Fields map[string]interface{}
 
 const (
-	// Debug has verbose message
-	Debug = "debug"
-	// Info is default log level
-	Info = "info"
-	// Warn is for logging messages about possible issues
-	Warn = "warn"
-	// Error is for logging errors
-	Error = "error"
-	// Fatal is for logging fatal messages. The system shutdown after logging the message.
-	Fatal = "fatal"
+	// DebugLevel logs are typically voluminous, and are usually disabled in
+	// production.
+	DebugLevel = "debug"
+
+	// InfoLevel is the default logging priority.
+	InfoLevel = "info"
+
+	// WarnLevel logs are more important than Info, but don't need individual
+	// human review.
+	WarnLevel = "warn"
+
+	// ErrorLevel logs are high-priority. If an application is running smoothly,
+	// it shouldn't generate any error-level logs.
+	ErrorLevel = "error"
+
+	// FatalLevel logs a message, then calls os.Exit(1).
+	FatalLevel = "fatal"
 )
 
 const (
@@ -58,23 +69,37 @@ type Configuration struct {
 	FileLocation      string
 	FileMaxSize       int
 	FileMaxAge        int
+	zapLogger         *zapLogger
+	logrusLogger      *logrusLogger
 }
 
 // NewLogger returns an instance of Logger
-func NewLogger(config Configuration, loggerInstance int) (Logger, error) {
+func NewLogger(config *Configuration, loggerInstance int) (Logger, error) {
 	switch loggerInstance {
 	case InstanceZapLogger:
-		logger, err := newZapLogger(config)
+		logger, err := newZapLogger(*config)
 		if err != nil {
 			return nil, err
 		}
+
+		zl, ok := logger.(*zapLogger)
+		if ok {
+			config.zapLogger = zl
+		}
+
 		return logger, nil
 
 	case InstanceLogrusLogger:
-		logger, err := newLogrusLogger(config)
+		logger, err := newLogrusLogger(*config)
 		if err != nil {
 			return nil, err
 		}
+
+		ll, ok := logger.(*logrusLogger)
+		if ok {
+			config.logrusLogger = ll
+		}
+
 		return logger, nil
 
 	default:
@@ -89,6 +114,24 @@ func GetConcreteLogger(log Logger) interface{} {
 		return l.sugaredLogger
 	case *logrusLogger:
 		return l.logger
+	}
+
+	return nil
+}
+
+func (c *Configuration) SetFileLevel(l string) error {
+	if c.zapLogger == nil && c.logrusLogger == nil {
+		return fmt.Errorf("log not initialized")
+	}
+
+	if c.zapLogger != nil {
+		c.zapLogger.atom.SetLevel(getZapLevel(l))
+	}
+
+	if c.logrusLogger != nil {
+		if l, err := logrus.ParseLevel(l); err == nil {
+			c.logrusLogger.logger.SetLevel(l)
+		}
 	}
 
 	return nil

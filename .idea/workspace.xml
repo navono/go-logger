@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c30f9254-f3c6-4793-a075-0dc1b69a8c31" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/user.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/user.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/example/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logger.go" beforeDir="false" afterPath="$PROJECT_DIR$/logger.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logrus.go" beforeDir="false" afterPath="$PROJECT_DIR$/logrus.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/zap.go" beforeDir="false" afterPath="$PROJECT_DIR$/zap.go" afterDir="false" />
@@ -40,7 +42,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="settings.editor.selected.configurable" value="go.vgo" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -86,7 +88,8 @@
     <MESSAGE value="fix: fix some typo" />
     <MESSAGE value="feat: 对 logrus 增加 caller，同时删除 log 隐式调用，直接返回实例" />
     <MESSAGE value="feat: 获取底层的 log 实例" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: 获取底层的 log 实例" />
+    <MESSAGE value="feat: 开放以文件作为日志输出的配置信息" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: 开放以文件作为日志输出的配置信息" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>

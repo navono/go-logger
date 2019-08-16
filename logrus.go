@@ -5,6 +5,7 @@ import (
 	"gopkg.in/natefinch/lumberjack.v2"
 	"io"
 	"os"
+	"strings"
 )
 
 type logrusLogEntry struct {
@@ -31,7 +32,7 @@ func newLogrusLogger(config Configuration) (Logger, error) {
 		logLevel = config.FileLevel
 	}
 
-	level, err := logrus.ParseLevel(logLevel)
+	level, err := logrus.ParseLevel(strings.ToLower(logLevel))
 	if err != nil {
 		return nil, err
 	}
@@ -43,6 +44,7 @@ func newLogrusLogger(config Configuration) (Logger, error) {
 		Compress: true,
 		MaxAge:   config.FileMaxAge,
 	}
+
 	lLogger := &logrus.Logger{
 		Out:       stdOutHandler,
 		Formatter: getFormatter(config.ConsoleJSONFormat),

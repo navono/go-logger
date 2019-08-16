@@ -2,6 +2,7 @@ package logger
 
 import (
 	"os"
+	"strings"
 
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
@@ -10,6 +11,7 @@ import (
 
 type zapLogger struct {
 	sugaredLogger *zap.SugaredLogger
+	atom          *zap.AtomicLevel
 }
 
 func getEncoder(isJSON bool) zapcore.Encoder {
@@ -22,17 +24,18 @@ func getEncoder(isJSON bool) zapcore.Encoder {
 	return zapcore.NewConsoleEncoder(encoderConfig)
 }
 
-func getZapLevel(level string) zapcore.Level {
-	switch level {
-	case Info:
+func getZapLevel(l string) zapcore.Level {
+	ll := strings.ToLower(l)
+	switch ll {
+	case InfoLevel:
 		return zapcore.InfoLevel
-	case Warn:
+	case WarnLevel:
 		return zapcore.WarnLevel
-	case Debug:
+	case DebugLevel:
 		return zapcore.DebugLevel
-	case Error:
+	case ErrorLevel:
 		return zapcore.ErrorLevel
-	case Fatal:
+	case FatalLevel:
 		return zapcore.FatalLevel
 	default:
 		return zapcore.InfoLevel
@@ -49,15 +52,19 @@ func newZapLogger(config Configuration) (Logger, error) {
 		cores = append(cores, core)
 	}
 
+	var atom zap.AtomicLevel
 	if config.EnableFile {
 		level := getZapLevel(config.FileLevel)
+		atom = zap.NewAtomicLevelAt(level)
+
 		writer := zapcore.AddSync(&lumberjack.Logger{
 			Filename: config.FileLocation,
 			MaxSize:  config.FileMaxSize,
 			Compress: true,
 			MaxAge:   config.FileMaxAge,
 		})
-		core := zapcore.NewCore(getEncoder(config.FileJSONFormat), writer, level)
+
+		core := zapcore.NewCore(getEncoder(config.FileJSONFormat), writer, atom)
 		cores = append(cores, core)
 	}
 
@@ -70,6 +77,7 @@ func newZapLogger(config Configuration) (Logger, error) {
 
 	return &zapLogger{
 		sugaredLogger: logger,
+		atom:          &atom,
 	}, nil
 }
 
@@ -104,5 +112,5 @@ func (l *zapLogger) WithFields(fields Fields) Logger {
 		f = append(f, v)
 	}
 	newLogger := l.sugaredLogger.With(f...)
-	return &zapLogger{newLogger}
+	return &zapLogger{newLogger, l.atom}
 }

@@ -4,6 +4,7 @@
       <w>debugf</w>
       <w>errorf</w>
       <w>infof</w>
+      <w>logrus</w>
       <w>panicf</w>
       <w>warnf</w>
     </words>
