@@ -119,7 +119,7 @@ func GetConcreteLogger(log Logger) interface{} {
 	return nil
 }
 
-func (c *Configuration) SetFileLevel(l string) error {
+func (c *Configuration) SetLevel(l string) error {
 	if c.zapLogger == nil && c.logrusLogger == nil {
 		return fmt.Errorf("log not initialized")
 	}
