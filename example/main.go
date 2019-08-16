@@ -1,7 +1,6 @@
 package main
 
 import (
-	"go.uber.org/zap"
 	"log"
 
 	"github.com/navono/go-logger"
@@ -10,16 +9,17 @@ import (
 func main() {
 	config := logger.Configuration{
 		EnableConsole:     true,
-		ConsoleLevel:      logger.Debug,
+		ConsoleLevel:      logger.DebugLevel,
 		ConsoleJSONFormat: true,
 		EnableFile:        true,
-		FileLevel:         logger.Info,
+		FileLevel:         logger.InfoLevel,
 		FileJSONFormat:    true,
-		FileLocation:      "log.log",
+		Filename:          "log.log",
 		FileMaxSize:       1,
 		FileMaxAge:        1,
+		Skip:              1,
 	}
-	zapLogger, err := logger.NewLogger(config, logger.InstanceZapLogger)
+	zapLogger, err := logger.NewLogger(&config, logger.InstanceZapLogger)
 	if err != nil {
 		log.Fatalf("Could not instantiate log %s", err.Error())
 	}
@@ -29,14 +29,14 @@ func main() {
 	contextLogger := zapLogger.WithFields(logger.Fields{"key1": "value1"})
 	contextLogger.Infof("Zap is awesome")
 
-	c := logger.GetConcreteLogger(zapLogger)
-	if c != nil {
-		sl := c.(*zap.SugaredLogger)
-		zl := sl.Desugar()
-		zl.Debug("concrete zap logger")
-	}
+	//c := logger.GetConcreteLogger(zapLogger)
+	//if c != nil {
+	//	sl := c.(*zap.SugaredLogger)
+	//	zl := sl.Desugar()
+	//	zl.Debug("concrete zap logger")
+	//}
 
-	logrusLogger, err := logger.NewLogger(config, logger.InstanceLogrusLogger)
+	logrusLogger, err := logger.NewLogger(&config, logger.InstanceLogrusLogger)
 	if err != nil {
 		log.Fatalf("Could not instantiate log %s", err.Error())
 	}

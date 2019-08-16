@@ -63,14 +63,36 @@ type Configuration struct {
 	EnableConsole     bool
 	ConsoleJSONFormat bool
 	ConsoleLevel      string
-	EnableFile        bool
-	FileJSONFormat    bool
-	FileLevel         string
-	FileLocation      string
-	FileMaxSize       int
-	FileMaxAge        int
-	zapLogger         *zapLogger
-	logrusLogger      *logrusLogger
+
+	// EnableFile that whether to log information to a file
+	EnableFile bool
+
+	// FileLevel is the log need json format for file
+	FileJSONFormat bool
+
+	// FileLevel is the log level that for file
+	FileLevel string
+
+	// Filename is the file to write logs to.  Backup log files will be retained
+	// in the same directory.
+	Filename string
+
+	// FileMaxSize is the maximum size in megabytes of the log file before it gets
+	// rotated. It defaults to 100 megabytes.
+	FileMaxSize int
+
+	// FileMaxAge is the maximum number of days to retain old log files based on the
+	// timestamp encoded in their filename.  Note that a day is defined as 24
+	// hours and may not exactly correspond to calendar days due to daylight
+	// savings, leap seconds, etc. The default is not to remove old log files
+	// based on age.
+	FileMaxAge int
+
+	// Skip count for caller stack. Zap and logrus have different skip count
+	Skip int
+
+	zapLogger    *zapLogger
+	logrusLogger *logrusLogger
 }
 
 // NewLogger returns an instance of Logger

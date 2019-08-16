@@ -58,7 +58,7 @@ func newZapLogger(config Configuration) (Logger, error) {
 		atom = zap.NewAtomicLevelAt(level)
 
 		writer := zapcore.AddSync(&lumberjack.Logger{
-			Filename: config.FileLocation,
+			Filename: config.Filename,
 			MaxSize:  config.FileMaxSize,
 			Compress: true,
 			MaxAge:   config.FileMaxAge,
@@ -71,7 +71,7 @@ func newZapLogger(config Configuration) (Logger, error) {
 	combinedCore := zapcore.NewTee(cores...)
 
 	logger := zap.New(combinedCore,
-		zap.AddCallerSkip(1),
+		zap.AddCallerSkip(config.Skip),
 		zap.AddCaller(),
 	).Sugar()
 

@@ -15,10 +15,10 @@ type contextHook struct {
 }
 
 // NewContextHook use to make an hook
-func NewContextHook(levels ...logrus.Level) logrus.Hook {
+func NewContextHook(skip int, levels ...logrus.Level) logrus.Hook {
 	hook := contextHook{
 		Field:  "caller",
-		Skip:   8,
+		Skip:   skip,
 		levels: levels,
 	}
 	if len(hook.levels) == 0 {

@@ -3,7 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="c30f9254-f3c6-4793-a075-0dc1b69a8c31" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/example/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logger.go" beforeDir="false" afterPath="$PROJECT_DIR$/logger.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logrus.go" beforeDir="false" afterPath="$PROJECT_DIR$/logrus.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logrusHooks.go" beforeDir="false" afterPath="$PROJECT_DIR$/logrusHooks.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zap.go" beforeDir="false" afterPath="$PROJECT_DIR$/zap.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -85,7 +89,8 @@
     <MESSAGE value="feat: 获取底层的 log 实例" />
     <MESSAGE value="feat: 开放以文件作为日志输出的配置信息" />
     <MESSAGE value="feat: 增加 Level 的设置" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: 增加 Level 的设置" />
+    <MESSAGE value="refactor: 重命名导出方法" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor: 重命名导出方法" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
@@ -103,6 +108,16 @@
           <url>file://$PROJECT_DIR$/logrusHooks.go</url>
           <line>36</line>
           <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/example/main.go</url>
+          <line>38</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/logrusHooks.go</url>
+          <line>42</line>
+          <option name="timeStamp" value="14" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
